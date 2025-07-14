@@ -25,6 +25,9 @@ CURRENT_DIR_BASENAME=$(basename "${CURRENT_DIR}")
 
 DOCKER_NAME="claude-code"
 
+echo "Pulling latest Docker image: ${DOCKER_IMG}"
+docker pull "${DOCKER_IMG}"
+
 # shellcheck disable=SC2145
 docker run -it --rm \
   --name "${DOCKER_NAME}" \

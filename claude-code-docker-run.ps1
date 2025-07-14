@@ -33,6 +33,13 @@ $CURRENT_DIR_BASENAME = Split-Path -Leaf $CURRENT_DIR
 
 $DOCKER_NAME = "claude-code"
 
+Write-Host "Pulling latest Docker image: $DOCKER_IMG"
+& docker pull $DOCKER_IMG
+if ($LASTEXITCODE -ne 0) {
+    Write-Error "Failed to pull Docker image"
+    exit 1
+}
+
 try {
     & docker run -it --rm `
         --name $DOCKER_NAME `
