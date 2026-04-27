@@ -5,10 +5,11 @@ This document contains all architecture and building instructions for the Claude
 ## Key Components
 
 - `Dockerfile`: Defines the Docker image with Node.js and necessary dependencies for running Claude Code
-  - Uses node:20-slim as base image
+  - Uses node:20 as base image (aligned with Anthropic's official Claude Code devcontainer)
   - Installs required system packages
   - Installs Python and pip for code-index-mcp dependency
   - Sets up environment for Claude Code
+  - Build args: `CLAUDE_CODE_VERSION` (default `latest`), `GIT_DELTA_VERSION` (default `0.19.2`)
 - Shell scripts for building, running, and publishing the Docker image:
   - `docker-build.sh`: Builds the Docker image locally
   - `docker-run-local.sh`: Runs Claude Code in the Docker container
@@ -71,10 +72,11 @@ This will tag and push both versions to the remote registry.
 ## Technical Details
 
 The Docker image includes:
-- Node.js 20 (slim version)
-- Python 3 and pip for code-index-mcp
-- Git, zsh, ripgrep and other development tools
-- The Claude Code CLI tool
+- Node.js 20
+- Python 3 and pip for code-index-mcp and uv
+- Git, zsh, fzf, gh, jq, ripgrep, bat, fd-find, tree, git-delta, nano, vim and other development tools
+- iptables/ipset/iproute2/dnsutils for networking and firewall control
+- The Claude Code CLI tool (`@anthropic-ai/claude-code`)
 
 Important implementation notes:
 - The Docker image switches between root and node users for different installation steps
